@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model APIKey {
+  id          String   @id @default(cuid())
+  name        String
+  environment String   // "production" or "test"
+  prefix      String   // sk_live_ or sk_test_
+  hash        String   @unique // HMAC-SHA256 hash
+  maskedKey   String
+  status      String   @default("active") // "active" or "revoked"
+  requests    Int      @default(0)
+  lastUsed    DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model ModerationJob {
+  id                String   @id @default(cuid())
+  job_id            String   @unique // The "job_01J..." format
+  content           String
+  status            String   // "PENDING", "COMPLETED", "FAILED"
+  verdict           String?  // "FLAGGED", "CLEAN"
+  scores            String?  // JSON string (SQLite doesn't have Native JSON)
+  flaggedCategories String?  // JSON string
+  model_version     String   @default("guardit-nlp-v2.1")
+  processing_time_ms Int?
+  metadata          String?  // JSON string
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model WebhookEndpoint {
+  id           String   @id @default(cuid())
+  url          String
+  description  String?
+  status       String   @default("active")
+  secret       String
+  events       String   // comma-separated list
+  createdAt    DateTime @default(now())
+}
+
+model SystemStat {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+

@@ -1,0 +1,405 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-base);
+}
+
+/* ── Sidebar ────────────────────────────────────────── */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: var(--z-overlay);
+  flex-shrink: 0;
+  transition: width var(--transition-base), transform var(--transition-base);
+}
+
+.sidebarCollapsed {
+  width: 72px;
+}
+
+.sidebar::-webkit-scrollbar { width: 3px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border-subtle); }
+
+.sidebarTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  min-height: 73px;
+}
+
+.sidebarCollapsed .sidebarTop {
+  justify-content: center;
+  padding: 0;
+}
+
+/* Logo */
+.sidebarLogo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  text-decoration: none;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.sidebarCollapsed .sidebarLogo {
+  padding: 0;
+  justify-content: center;
+}
+
+.sidebarLogoIcon {
+  width: 32px;
+  height: 32px;
+  background: rgba(99,102,241,0.15);
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebarLogoText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.logoBrand {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.logoSub {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.collapseBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: var(--space-4);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.sidebarCollapsed .collapseBtn {
+  display: none; /* Hide toggle when collapsed, or reposition it */
+}
+
+/* Let's show the toggle in the topbar if collapsed, or just make it accessible. 
+   Actually, a hover-reveal or a small floating button is better. 
+   But let's stick to the request: "retractable and pull out". 
+   I'll make the toggle visible but centered when collapsed. */
+
+.sidebarCollapsed .collapseBtn {
+  display: flex;
+  margin: 0;
+  position: absolute;
+  top: 100px;
+  right: -14px;
+  z-index: 100;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+}
+
+.collapseBtn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* Tenant Badge */
+.tenantBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+  min-height: 62px;
+}
+
+.sidebarCollapsed .tenantBadge {
+  justify-content: center;
+  padding: var(--space-4) 0;
+}
+
+.tenantAvatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.tenantInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.tenantName {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tenantPlan {
+  font-size: 0.68rem;
+  color: var(--brand-primary);
+  font-weight: 500;
+}
+
+/* Nav */
+.nav {
+  flex: 1;
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  overflow-y: auto;
+}
+
+.sidebarCollapsed .nav {
+  padding: var(--space-4) 0;
+  align-items: center;
+}
+
+.navSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebarCollapsed .navSection {
+  width: 100%;
+  align-items: center;
+}
+
+.navLabel {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-disabled);
+  padding: 0 var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  position: relative;
+  white-space: nowrap;
+}
+
+.sidebarCollapsed .navItem {
+  padding: var(--space-3);
+  justify-content: center;
+}
+
+.navItem:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.navItemActive {
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--brand-primary);
+  border: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+.navItemActive:hover {
+  background: rgba(99, 102, 241, 0.16);
+  color: var(--brand-primary);
+}
+
+.navBadge {
+  margin-left: auto;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-danger);
+  padding: 2px 6px;
+  background: rgba(239,68,68,0.1);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-sm);
+  animation: blink 1.5s infinite;
+}
+
+/* Sidebar Bottom */
+.sidebarBottom {
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.sidebarCollapsed .sidebarBottom {
+  padding: var(--space-4) 0;
+  align-items: center;
+}
+
+.backToSite {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.backToSite:hover { color: var(--text-secondary); }
+
+.apiVersion {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--text-disabled);
+}
+
+/* ── Main Content ───────────────────────────────────── */
+.main {
+  flex: 1;
+  margin-left: 260px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left var(--transition-base);
+}
+
+.layoutCollapsed .main {
+  margin-left: 72px;
+}
+
+/* Top Bar */
+.topbar {
+  height: 60px;
+  background: rgba(9, 9, 15, 0.8);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-6);
+  gap: var(--space-4);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.menuBtn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.menuBtn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.topbarRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-left: auto;
+}
+
+.systemStatus {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.content {
+  flex: 1;
+  padding: var(--space-8) var(--space-8);
+  overflow-y: auto;
+}
+
+/* Mobile Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: calc(var(--z-overlay) - 1);
+  display: none;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 260px !important; /* Full width on mobile */
+    transform: translateX(-100%);
+    transition: transform var(--transition-base);
+    padding-top: 20px;
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .layoutCollapsed .main { margin-left: 0; }
+  .main { margin-left: 0; }
+  .menuBtn { display: flex; }
+  .overlay { display: block; }
+  .content { padding: var(--space-6) var(--space-4); }
+  .collapseBtn { display: none !important; }
+}
